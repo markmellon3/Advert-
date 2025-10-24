@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ADVERTS</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+/* ===== RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  min-height: 100vh;
+  background: #111;
+  overflow-x: hidden;
+}
+
+/* ===== BACKGROUND ANIMATION ===== */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: url('assets/myphotos/birthday/birthday.jpg') no-repeat center center/cover;
+  filter: brightness(0.4);
+  z-index: -1;
+  animation: moveBg 20s linear infinite alternate;
+}
+@keyframes moveBg { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+
+/* ===== NAVBAR ===== */
+nav {
+  background: rgba(0,0,0,0.6);
+  padding: 15px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(6px);
+  z-index: 10;
+}
+nav h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  background: linear-gradient(90deg, #ff0066, #00e6e6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 25px;
+  align-items: center;
+}
+nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+nav ul li a:hover {
+  color: #00e6e6;
+}
+
+/* ===== CURRENCY SELECT ===== */
+#currency-select {
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  background: rgba(0,230,230,0.2);
+  color: #111;
+  cursor: pointer;
+}
+#currency-select:hover { background: #00e6e6; color: #111; }
+
+/* ===== DASHBOARD CONTAINER ===== */
+.dashboard {
+  padding: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 30px;
+}
+
+/* ===== AD CARD ===== */
+.ad-card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 15px;
+  overflow: hidden;
+  position: relative;
+  backdrop-filter: blur(4px);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.ad-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 20px rgba(0,230,230,0.3);
+}
+.ad-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  border: 3px solid #00e6e6;
+  border-radius: 15px;
+  position: relative;
+}
+
+/* ===== PRICE POPUP ===== */
+.price-tag {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0,230,230,0.9);
+  color: #111;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+
+/* ===== INFO & REACTIONS ===== */
+.ad-card .info {
+  padding: 15px;
+  text-align: center;
+}
+.ad-card h4 {
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+.ad-card p {
+  font-size: 0.9rem;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+/* ===== REACTION BUTTONS ===== */
+.reactions {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+}
+.reaction-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #00e6e6;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: transform 0.2s ease, color 0.3s;
+}
+.reaction-btn span { font-size: 0.9rem; }
+.reaction-btn:hover {
+  color: #ff0066;
+  transform: scale(1.2);
+}
+
+/* ===== CONTACT BUTTONS ===== */
+.contact-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+.contact-buttons a {
+  color: #fff;
+  font-size: 1.3rem;
+  text-decoration: none;
+  background: rgba(0,230,230,0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: background 0.3s, transform 0.3s;
+}
+.contact-buttons a:hover {
+  background: #00e6e6;
+  color: #111;
+  transform: scale(1.2);
+}
+
+/* Click pulse animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+.reaction-btn.clicked i { animation: pulse 0.4s ease; }
+
+/* ===== FOOTER ===== */
+footer {
+  text-align: center;
+  padding: 30px;
+  background: rgba(0,0,0,0.6);
+  margin-top: 40px;
+}
+footer p { color: #aaa; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<!-- ===== NAVIGATION ===== -->
+<nav>
+  <h2>ADVERTS</h2>
+  <ul>
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li>
+      <select id="currency-select">
+        <option value="USD" selected>USD</option>
+        <option value="EUR">EUR</option>
+        <option value="GBP">GBP</option>
+        <option value="UGX">UGX</option>
+      </select>
+    </li>
+  </ul>
+</nav>
+<footer><p>Switch to desktop mode for better preview</p></footer>
+<!-- ===== ADVERT DASHBOARD ===== -->
+<section class="dashboard">
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  
+  <div class="ad-card" data-price="49.99">
+    <div style="position: relative;">
+      <img src="assets/myphotos/birthday/birthday.jpg" alt="Ad 1">
+      <div class="price-tag">$49.99</div>
+    </div>
+    <div class="info">
+      <h4>Birthday Campaign</h4>
+      <p>Showcase your best celebration themes with unique designs.</p>
+    </div>
+    <div class="reactions">
+      <button class="reaction-btn"><i class="fa-regular fa-thumbs-up"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-heart"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-solid fa-fire"></i><span>0</span></button>
+      <button class="reaction-btn"><i class="fa-regular fa-face-surprise"></i><span>0</span></button>
+    </div>
+    <div class="contact-buttons">
+      <a href="https://wa.me/256700000000" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
+      <a href="tel:+256700000000"><i class="fa-solid fa-phone"></i></a>
+      <a href="mailto:contact@markmellon.com"><i class="fa-solid fa-envelope"></i></a>
+    </div>
+  </div>
+  <!-- Repeat ad-cards as needed, just make sure to include data-price attributes -->
+
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <p>© 2025 Advertisement— All rights reserved.By Markmellon industrys</p>
+</footer>
+
+<script>
+/* ===== REACTION BUTTON LOGIC ===== */
+const reactionButtons = document.querySelectorAll('.reaction-btn');
+reactionButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    const icon = btn.querySelector('i');
+    const countSpan = btn.querySelector('span');
+    let count = parseInt(countSpan.textContent);
+    count++;
+    countSpan.textContent = count;
+    icon.classList.add('clicked');
+    setTimeout(() => icon.classList.remove('clicked'), 400);
+  });
+});
+
+/* ===== CURRENCY CONVERSION LOGIC ===== */
+const currencySelect = document.getElementById('currency-select');
+const exchangeRates = {
+  USD: 1,       // base
+  EUR: 0.91,
+  GBP: 0.78,
+  UGX: 3820     // example rate: 1 USD = 3820 UGX
+};
+
+currencySelect.addEventListener('change', () => {
+  const selectedCurrency = currencySelect.value;
+  const cards = document.querySelectorAll('.ad-card');
+
+  cards.forEach(card => {
+    const basePrice = parseFloat(card.getAttribute('data-price'));
+    const convertedPrice = (basePrice * exchangeRates[selectedCurrency]).toFixed(2);
+    const symbol = selectedCurrency === 'USD' ? '$' :
+                   selectedCurrency === 'EUR' ? '€' :
+                   selectedCurrency === 'GBP' ? '£' :
+                   selectedCurrency === 'UGX' ? 'UGX ' : '';
+    card.querySelector('.price-tag').textContent = symbol + convertedPrice;
+  });
+});
+</script>
+
+</body>
+</html>
